@@ -1,4 +1,5 @@
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.22.1)
+
 set(CMAKE_CXX_STANDARD 17)
 
 project(imp LANGUAGES CXX)
@@ -12,10 +13,8 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(googletest)
 
 add_executable(${PROJECT_NAME} 
-test/test_impartial_game.cc src/impartial_game.cc
-test/test_chomp.cc src/chomp.cc
-test/test_nim.cc src/nim.cc
-src/player.cc src/user_input_handler.cc src/ui.cc
+src/play.cc src/game.cc
+test/test_game.cc test/test_play.cc
 )
 
 target_link_libraries(${PROJECT_NAME} gtest_main gmock_main)
