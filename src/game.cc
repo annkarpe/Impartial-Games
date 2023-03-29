@@ -88,6 +88,10 @@ std::string Nim::help() const {
     return "please write two numbers, heap id and number of tokens to remove";
 }
 
+std::unique_ptr<Game> Nim::create() {
+    return std::make_unique<Nim>();
+}
+
 Chomp::~Chomp() { }
 
 void Chomp::from_string(const std::string &desc) {
@@ -161,4 +165,9 @@ std::string Chomp::help() const {
 bool Chomp::any_moves_left() const {
     return std::any_of(board.begin(), board.end(), [&](int h) { return h > 0; });
 }
+
+std::unique_ptr<Game> Chomp::create() {
+    return std::make_unique<Chomp>();
+}
+
 

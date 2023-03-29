@@ -13,8 +13,8 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(googletest)
 
 add_executable(${PROJECT_NAME} 
-src/play.cc src/game.cc
-test/test_game.cc test/test_play.cc
+src/play.cc src/game.cc src/game_factory.cc src/user_input_handler.cc
+test/test_game.cc test/test_play.cc test/test_game_factory.cc
 )
 
 target_link_libraries(${PROJECT_NAME} gtest_main gmock_main)

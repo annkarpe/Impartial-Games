@@ -31,6 +31,8 @@ public:
     bool move(const std::string &desc) override;
     std::string help() const override;
     bool any_moves_left() const override;
+
+    static std::unique_ptr<Game> create();
 };
 
 
@@ -45,6 +47,8 @@ public:
     bool move(const std::string &desc) override;
     std::string help() const override;
     bool any_moves_left() const override;
+
+    static std::unique_ptr<Game> create();
 };
 /*
 class AI {

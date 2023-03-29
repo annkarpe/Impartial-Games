@@ -1,18 +1,25 @@
 #include "../lib/game.h"
 #include "../lib/play.h"
-#include<iostream>
-#include<memory>
+#include "../lib/game_factory.h"
+#include "../lib/user_input_handler.h"
+
 
 //can cause memory licks
+//Games avilable: cout from file
 void Play::choose() {
-    std::cout << "which game [nim/chomp]?\n";
-    std::string choice;
-    std::cin >> choice;
-    if (choice == "nim") {
-        g = std::make_unique<Nim>();
-    } else if (choice == "chomp") {
-        g = std::make_unique<Chomp>();
+    std::cout << "Games avilable:\n";
+    std::ifstream f;
+    f.open("games.txt");
+    if (!f) {
+        std::cout << "Unable to open the file";
     }
+    std::string str;
+    while (std::getline(f, str)) {
+        std::cout << str << '\n';
+    }
+    std::string name = uih.ask_game();
+    g = gf.create_game(name);
+
     std::string ignore_newline;
     std::getline(std::cin, ignore_newline);
 }
