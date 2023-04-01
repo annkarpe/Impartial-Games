@@ -8,9 +8,7 @@
 #include<memory>
 #include<string>
 #include<fstream>
-//create another class that wraps play Play should run on sstream
-//or mock cout
-//or create iostream, ostream as fields, create constructor
+
 class Play {
     GameFactory gf;
     UserInputHandler uih;
@@ -21,6 +19,7 @@ public:
     void init();
     void one_move();
     void play();
+    void register_g(const std::string &name, auto f);
 };
 
 

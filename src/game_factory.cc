@@ -1,7 +1,5 @@
 #include"../lib/game_factory.h"
 
-GameFactory::callback_map GameFactory::games_map;
-
 void GameFactory::register_game(const std::string &name, create_callback cb) {
     games_map[name] = cb;
 }
@@ -13,9 +11,16 @@ std::unique_ptr<Game> GameFactory::create_game(const std::string &name) {
     if (it != games_map.end()) {
         return it->second();
     } else {
-        // it should be handled 
         throw std::runtime_error("Unknown game");
     }
+}
+
+std::vector<std::string> GameFactory::titles_of_games() {
+    std::vector<std::string> v;
+    for (auto kv : games_map) {
+        v.push_back(kv.first);
+    }
+    return v;
 }
 
 

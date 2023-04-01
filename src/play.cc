@@ -4,24 +4,14 @@
 #include "../lib/user_input_handler.h"
 
 
-//can cause memory licks
-//Games avilable: cout from file
 void Play::choose() {
     std::cout << "Games avilable:\n";
-    std::ifstream f;
-    f.open("games.txt");
-    if (!f) {
-        std::cout << "Unable to open the file";
-    }
-    std::string str;
-    while (std::getline(f, str)) {
-        std::cout << str << '\n';
+    auto titles = gf.titles_of_games();
+    for (auto &i : titles) {
+        std::cout << i << std::endl;
     }
     std::string name = uih.ask_game();
     g = gf.create_game(name);
-
-    std::string ignore_newline;
-    std::getline(std::cin, ignore_newline);
 }
 
 void Play::init() {
@@ -54,3 +44,6 @@ void Play::play() {
     std::cout << "player " << player << " loses!";
 }
 
+void Play::register_g(const std::string &name, auto f) {
+    gf.register_game(name, f);
+}

@@ -4,7 +4,6 @@
 #include "lib/game_factory.h"
 #include "lib/play.h"
 #include "lib/user_input_handler.h"
-/**/
 #include"src/game_factory.cc"
 #include "src/game.cc"
 #include "src/play.cc"
@@ -12,10 +11,11 @@
 
 int main() {
     GameFactory gf;
-    gf.register_game("nim", Nim::create);
-    gf.register_game("chomp", Chomp::create);
-
     Play p;
+    p.register_g("nim", Nim::create);
+    p.register_g("chomp", Chomp::create);
+
+    
     
 
     p.choose();
@@ -24,14 +24,3 @@ int main() {
     p.play();
 
 }
-
-
-// def of mathematical game
-// make play class extensible using factory
-/*
-Play p;
-p.register("nim", Nim::create) static method of a nim class
-
-
-
-*/

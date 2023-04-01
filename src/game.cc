@@ -104,7 +104,6 @@ std::vector<std::unique_ptr<Game>> Chomp::children() const {
     return child;
 }
 
-//or will it be more natural to ask how many to leave?
 std::string Chomp::to_string() const {
     std::string s;
     for ( size_t row = 0 ; row < board.size() ; row++) {
