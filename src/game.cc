@@ -27,7 +27,6 @@ bool Nim::any_moves_left() const {
     return std::any_of(heaps.begin(), heaps.end(), [&](int h) { return h > 0; });
 }
 
-
 std::vector<std::unique_ptr<Game>> Nim::children() const {
     std::vector<std::unique_ptr<Game>> child;
     for ( size_t heap = 0 ; heap < heaps.size() ; heap++) {
