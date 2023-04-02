@@ -7,6 +7,7 @@
 class UserInputHandler {
 public:
     std::string ask_game() const;
+    std::string ask_init() const;
 };
 
 

@@ -8,3 +8,10 @@ std::string UserInputHandler::ask_game() const {
     std::getline(std::cin, ignore);
     return choice;
 }
+
+std::string UserInputHandler::ask_init() const {
+    std::cout << "Initial board position?\n";
+    std::string desc;
+    std::getline(std::cin, desc);
+    return desc;
+}

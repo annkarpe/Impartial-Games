@@ -3,9 +3,11 @@
 #include "../lib/game_factory.h"
 #include "../lib/user_input_handler.h"
 
+Play::Play(GameFactory& gfact, UserInputHandler& usih)
+    :gf(gfact), uih(usih) {}
 
 void Play::choose() {
-    std::cout << "Games avilable:\n";
+    std::cout << "Games available:\n";
     auto titles = gf.titles_of_games();
     for (auto &i : titles) {
         std::cout << i << std::endl;
@@ -15,10 +17,7 @@ void Play::choose() {
 }
 
 void Play::init() {
-    std::cout << "initial board position?\n";
-    std::string desc;
-    std::getline(std::cin, desc);
-    g->from_string(desc);
+    g->from_string(uih.ask_init());
 }
 
 void Play::one_move() {

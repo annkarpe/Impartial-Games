@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.22.1)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_FLAGS "-g -O0 -fprofile-arcs -ftest-coverage")
 
 project(imp LANGUAGES CXX)
 
@@ -13,8 +14,12 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(googletest)
 
 add_executable(${PROJECT_NAME} 
-src/play.cc src/game.cc src/game_factory.cc src/user_input_handler.cc
-test/test_game.cc test/test_play.cc test/test_game_factory.cc
+src/play.cc src/game.cc src/game_factory.cc 
+src/user_input_handler.cc 
+
+test/test_game.cc 
+test/test_game_factory.cc
+test/test_user_input_handler.cc
 )
 
 target_link_libraries(${PROJECT_NAME} gtest_main gmock_main)

@@ -23,8 +23,6 @@ TEST_F(NimTest, AnyMovesLeftReturnsTrueWhenThereAreTokensInHeaps) {
     ASSERT_TRUE(n.any_moves_left());
 }
 
-//TEST_F(NimTest, ChildrenPus) {}
-
 TEST_F(NimTest, ToStringReturnsCorrectBoardPosition) {
     n.from_string("0 2 2");
     std::string s = "0: \n1: ||\n2: ||\n";
@@ -62,8 +60,6 @@ TEST_F(NimTest, ToStringReturnsCorrectBoardPositionAfterMove) {
     std::string s = "0: \n1: |\n2: |||\n";
     ASSERT_EQ(s, n.to_string());
 }
-
-
 
 class ChompTest : public testing::Test {
 public:

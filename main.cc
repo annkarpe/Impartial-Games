@@ -11,12 +11,10 @@
 
 int main() {
     GameFactory gf;
-    Play p;
+    UserInputHandler uih;
+    Play p(gf, uih);
     p.register_g("nim", Nim::create);
     p.register_g("chomp", Chomp::create);
-
-    
-    
 
     p.choose();
     p.init();
@@ -24,3 +22,10 @@ int main() {
     p.play();
 
 }
+
+
+/*
+gcovr --html --output=coverage.html
+lcov --directory . --capture --output-file coverage.info
+genhtml coverage.info --output-directory coverage_html
+*/

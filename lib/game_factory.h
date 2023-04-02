@@ -8,9 +8,12 @@
 #include<functional>
 #include<stdexcept>
 
+#include"game.h"
+
 class Game;
 
 class GameFactory {
+protected:
     using create_callback
      = std::function<std::unique_ptr<Game>()>;    
     using callback_map = std::map<std::string, create_callback>;

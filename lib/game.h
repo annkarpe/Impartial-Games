@@ -7,7 +7,8 @@
 #include <vector>
 #include <memory>
 
-class Game {
+class Game
+{
 public:
     virtual ~Game() = 0;
     virtual void from_string(const std::string &desc) = 0;
@@ -16,6 +17,7 @@ public:
     virtual bool move(const std::string &desc) = 0;
     virtual std::string help() const = 0;
     virtual bool any_moves_left() const = 0;
+    virtual bool is_winning_pos() const = 0;
 };
 
 std::vector<size_t> string_to_vec(const std::string &s);
@@ -31,6 +33,7 @@ public:
     bool move(const std::string &desc) override;
     std::string help() const override;
     bool any_moves_left() const override;
+    bool is_winning_pos() const override;
 
     static std::unique_ptr<Game> create();
 };
@@ -47,24 +50,9 @@ public:
     bool move(const std::string &desc) override;
     std::string help() const override;
     bool any_moves_left() const override;
+    bool is_winning_pos() const override;
 
     static std::unique_ptr<Game> create();
 };
-/*
-class AI {
-    std::unique_ptr<Game> g;
-    std::vector<std::pair<size_t, size_t>> possible_moves;
-public:
-    
-
-};
-
-class NimAI : public AI {
-
-};
-
-class ChompAI : public AI {
-
-}*/
 
 #endif

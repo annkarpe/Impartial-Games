@@ -9,10 +9,16 @@
 #include<string>
 #include<fstream>
 
+
+//as I understand, to use GMock it's crutial
+//to pass the instances to the class constructor
+//as a parameters
 class Play {
-    GameFactory gf;
-    UserInputHandler uih;
+    GameFactory& gf;
+    UserInputHandler& uih;
 public:
+    Play(GameFactory& gfact, UserInputHandler& usih);
+
     std::unique_ptr<Game> g;
     int player = 0;
     void choose();

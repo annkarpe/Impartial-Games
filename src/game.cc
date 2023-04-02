@@ -1,7 +1,8 @@
-#include "../lib/game.h"
-#include "../lib/play.h"
-#include <string>
-#include <algorithm>
+#include"../lib/game.h"
+#include"../lib/play.h"
+#include<string>
+#include<algorithm>
+
 
 std::vector<size_t> string_to_vec(const std::string &s) {
     std::vector<size_t> ret;
@@ -38,6 +39,22 @@ std::vector<std::unique_ptr<Game>> Nim::children() const {
     }
 
     return child;
+}
+
+bool Nim::is_winning_pos() const {
+    if (!any_moves_left()) {
+        return false;
+    }
+
+    auto ch = children();
+
+    for (auto &c: ch) {
+        if (!c->is_winning_pos()) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 std::string Nim::to_string() const {
@@ -99,8 +116,31 @@ void Chomp::from_string(const std::string &desc) {
 
 std::vector<std::unique_ptr<Game>> Chomp::children() const {
     std::vector<std::unique_ptr<Game>> child;
+    for ( size_t b = 0 ; b < board.size() ; b++) {
+        for (size_t h = 1 ; h <= board[b] ; h++) {
+            std::unique_ptr<Chomp> ptr = std::make_unique<Chomp>(*this);
+            ptr->board[b] -= h;
+            child.push_back(std::move(ptr));
+        }
+    }
 
     return child;
+}
+
+bool Chomp::is_winning_pos() const {
+    if (!any_moves_left()) {
+        return false;
+    }
+
+    auto ch = children();
+
+    for (auto &c: ch) {
+        if (!c->is_winning_pos()) {
+            return true;
+        }
+    }
+    
+    return false;
 }
 
 std::string Chomp::to_string() const {
