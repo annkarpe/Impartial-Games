@@ -20,3 +20,10 @@ TEST_F(UserInputHandlerTest, InitialPositionReturnedTheSameAsInputed) {
     std::string g = uih.ask_init();
     EXPECT_EQ(g, "4 5 6");
 }
+
+TEST_F(UserInputHandlerTest, ModeReturnedTheSameAsInputed) {
+    std::stringstream inp_str("1");
+    std::cin.rdbuf(inp_str.rdbuf());
+    std::string g = uih.ask_init();
+    EXPECT_EQ(g, "1");
+}

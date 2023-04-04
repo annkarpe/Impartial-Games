@@ -15,3 +15,12 @@ std::string UserInputHandler::ask_init() const {
     std::getline(std::cin, desc);
     return desc;
 }
+
+std::string UserInputHandler::ask_mode() const {
+    std::cout << "If you would like to play with computer press 0. If you want to play with another player, press 1:\n";
+    std::string choice;
+    std::cin >> choice;
+    std::string ignore;
+    std::getline(std::cin, ignore);
+    return choice;
+}

@@ -19,11 +19,21 @@ void Play::choose() {
 void Play::init() {
     g->from_string(uih.ask_init());
 }
+void Play::ai_move() {
+    std::cout << g->to_string() << std::endl;
+    std::vector<std::unique_ptr<Game>> ch = g->children();
+    for (auto &c : ch) {
+        if (!c->is_winning_pos()) {
+            g = std::move(c);
+            return;
+        }
+    }
+    int r = rand() % ch.size();
+    g = std::move(ch[r]);
+}
 
 void Play::one_move() {
     std::cout << g->to_string() << std::endl;
-    std::cout << "player " << player << " moves\n";
-    player = !player;
     std::string desc;
     std::getline(std::cin, desc);
     bool ok = g->move(desc);
@@ -36,11 +46,34 @@ void Play::one_move() {
 }
 
 void Play::play() {
-    while (g->any_moves_left()) {
-        one_move();
+    if (uih.ask_mode() == "0") {
+        if(g->any_moves_left()) {
+            std::cout << "computer moves\n";  
+            ai_move();            
+        } else {
+            std::cout << "computer wins\n"; 
+        }
+        if (g->any_moves_left()) {
+            std::cout << "player moves\n";  
+            one_move(); 
+            if(!g->any_moves_left()) {
+                std::cout << "computer wins\n"; 
+            }
+        } else {
+            std::cout << "player wins\n"; 
+        }
+    } else {
+        while (g->any_moves_left()) {
+            std::cout << "player " << player << " moves\n";                     
+            one_move();
+            player = !player;            
+            
+        }    
+        std::cout << "player " << player << " wins!";            
     }
 
-    std::cout << "player " << player << " loses!";
+
+
 }
 
 void Play::register_g(const std::string &name, auto f) {

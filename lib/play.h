@@ -6,6 +6,7 @@
 #include"user_input_handler.h"
 #include<iostream>
 #include<memory>
+#include<cstdlib>
 #include<string>
 #include<fstream>
 
@@ -25,6 +26,7 @@ public:
     void init();
     void one_move();
     void play();
+    void ai_move();
     void register_g(const std::string &name, auto f);
 };
 

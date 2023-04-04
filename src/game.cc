@@ -119,6 +119,12 @@ std::vector<std::unique_ptr<Game>> Chomp::children() const {
     for ( size_t b = 0 ; b < board.size() ; b++) {
         for (size_t h = 1 ; h <= board[b] ; h++) {
             std::unique_ptr<Chomp> ptr = std::make_unique<Chomp>(*this);
+            size_t max = ptr->board[b] - h;
+            for(int i = 0; i < b; i++) {
+                if (ptr->board[i] >= max) {
+                    ptr->board[i] = max;
+                }
+            }
             ptr->board[b] -= h;
             child.push_back(std::move(ptr));
         }
@@ -183,15 +189,14 @@ bool Chomp::move(const std::string &desc) {
         return false;
     }
     size_t max_num = board[row] - tokens;
-    for (size_t i = 0; i <= row; i++) {
-        size_t r = board[i];
-        size_t temp = r - tokens;
-        if (temp >= max_num) {
-            board[i] = max_num;
-        } else {
-            board[i] -= r - max_num;
+    for (size_t i = 0; i < row; i++) {
+        if(board[i] > max_num) {
+            for (size_t j = 0; j < board[i] - max_num; j++) {
+                --board[i];
+            }
         }
     }
+    board[row] -= tokens;
 
     return true;
 }
