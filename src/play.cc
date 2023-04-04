@@ -28,6 +28,7 @@ void Play::ai_move() {
             return;
         }
     }
+    srand(time(NULL));
     int r = rand() % ch.size();
     g = std::move(ch[r]);
 }
@@ -47,20 +48,37 @@ void Play::one_move() {
 
 void Play::play() {
     if (uih.ask_mode() == "0") {
-        if(g->any_moves_left()) {
-            std::cout << "computer moves\n";  
-            ai_move();            
+        std::cout << g->to_string() << std::endl;
+        if (uih.ask_starts_first() == "0") {
+            while(g->any_moves_left()) {
+                one_move(); 
+                std::cout << "player moves\n";              
+                if(!g->any_moves_left()) {
+                    std::cout << "computer wins\n"; 
+                }
+                if(g->any_moves_left()) {
+                    ai_move();
+                    std::cout << "computer moves\n";                  
+                    if(!g->any_moves_left()) {
+                        std::cout << "player wins\n"; 
+                    }                 
+                }
+            }  
         } else {
-            std::cout << "computer wins\n"; 
-        }
-        if (g->any_moves_left()) {
-            std::cout << "player moves\n";  
-            one_move(); 
-            if(!g->any_moves_left()) {
-                std::cout << "computer wins\n"; 
-            }
-        } else {
-            std::cout << "player wins\n"; 
+            while(g->any_moves_left()) {
+                ai_move(); 
+                std::cout << "computer moves\n";              
+                if(!g->any_moves_left()) {
+                    std::cout << "player wins\n"; 
+                }
+                if(g->any_moves_left()) {
+                    one_move();
+                    std::cout << "player moves\n";                  
+                    if(!g->any_moves_left()) {
+                        std::cout << "computer wins\n"; 
+                    }                 
+                }
+            }            
         }
     } else {
         while (g->any_moves_left()) {
@@ -71,9 +89,6 @@ void Play::play() {
         }    
         std::cout << "player " << player << " wins!";            
     }
-
-
-
 }
 
 void Play::register_g(const std::string &name, auto f) {

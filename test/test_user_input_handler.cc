@@ -27,3 +27,10 @@ TEST_F(UserInputHandlerTest, ModeReturnedTheSameAsInputed) {
     std::string g = uih.ask_init();
     EXPECT_EQ(g, "1");
 }
+
+TEST_F(UserInputHandlerTest, StartsFirstReturnedTheSameAsInputed) {
+    std::stringstream inp_str("0");
+    std::cin.rdbuf(inp_str.rdbuf());
+    std::string g = uih.ask_init();
+    EXPECT_EQ(g, "0");
+}

@@ -43,7 +43,7 @@ std::vector<std::unique_ptr<Game>> Nim::children() const {
 
 bool Nim::is_winning_pos() const {
     if (!any_moves_left()) {
-        return false;
+        return true;
     }
 
     auto ch = children();
@@ -135,7 +135,7 @@ std::vector<std::unique_ptr<Game>> Chomp::children() const {
 
 bool Chomp::is_winning_pos() const {
     if (!any_moves_left()) {
-        return false;
+        return true;
     }
 
     auto ch = children();

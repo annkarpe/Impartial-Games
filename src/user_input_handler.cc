@@ -24,3 +24,12 @@ std::string UserInputHandler::ask_mode() const {
     std::getline(std::cin, ignore);
     return choice;
 }
+
+std::string UserInputHandler::ask_starts_first() const {
+    std::cout << "If you would like to start first, press 0. If you want computer start first, press 1:\n";
+    std::string choice;
+    std::cin >> choice;
+    std::string ignore;
+    std::getline(std::cin, ignore);
+    return choice;
+}
