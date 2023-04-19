@@ -14,6 +14,10 @@
 //as I understand, to use GMock it's crutial
 //to pass the instances to the class constructor
 //as a parameters
+
+enum StartsFirst {Player, Computer};
+enum Mode {PC, PP};
+
 class Play {
     GameFactory& gf;
     UserInputHandler& uih;
@@ -28,6 +32,8 @@ public:
     void play();
     void ai_move();
     void register_g(const std::string &name, auto f);
+    void pp_play();
+    void pc_play(int starts);
 };
 
 

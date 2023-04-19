@@ -3,7 +3,6 @@
 #include<string>
 #include<algorithm>
 
-
 std::vector<size_t> string_to_vec(const std::string &s) {
     std::vector<size_t> ret;
     std::istringstream is(s);
@@ -212,5 +211,3 @@ bool Chomp::any_moves_left() const {
 std::unique_ptr<Game> Chomp::create() {
     return std::make_unique<Chomp>();
 }
-
-

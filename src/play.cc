@@ -46,48 +46,45 @@ void Play::one_move() {
     }
 }
 
-void Play::play() {
-    if (uih.ask_mode() == "0") {
-        std::cout << g->to_string() << std::endl;
-        if (uih.ask_starts_first() == "0") {
-            while(g->any_moves_left()) {
-                one_move(); 
-                std::cout << "player moves\n";              
-                if(!g->any_moves_left()) {
-                    std::cout << "computer wins\n"; 
-                }
-                if(g->any_moves_left()) {
-                    ai_move();
-                    std::cout << "computer moves\n";                  
-                    if(!g->any_moves_left()) {
-                        std::cout << "player wins\n"; 
-                    }                 
-                }
-            }  
-        } else {
-            while(g->any_moves_left()) {
-                ai_move(); 
-                std::cout << "computer moves\n";              
-                if(!g->any_moves_left()) {
-                    std::cout << "player wins\n"; 
-                }
-                if(g->any_moves_left()) {
-                    one_move();
-                    std::cout << "player moves\n";                  
-                    if(!g->any_moves_left()) {
-                        std::cout << "computer wins\n"; 
-                    }                 
-                }
-            }            
-        }
-    } else {
-        while (g->any_moves_left()) {
-            std::cout << "player " << player << " moves\n";                     
+void Play::pp_play() {
+    while (g->any_moves_left()) {
+        std::cout << "player " << player << " moves\n";                     
+        one_move();
+        player = !player;            
+    }    
+
+    std::cout << "player " << player << " wins!";  
+}
+
+void Play::pc_play(int player_starts) {
+    int player_turn;
+    while(g->any_moves_left()) {
+        if (player_turn) {
             one_move();
-            player = !player;            
-            
-        }    
-        std::cout << "player " << player << " wins!";            
+        } else {
+            ai_move();
+        }
+        std::cout << (player_turn ? "player moves\n" : "computer moves\n");
+        if (!g->any_moves_left()) {
+            std::cout << (player_turn ? "computer wins\n" : "player wins\n");
+            break;
+        }
+        player_turn = !player_turn;
+    }
+}
+
+void Play::play() {
+    switch(std::stoi(uih.ask_mode())) {
+        case Mode::PC:
+            if (std::stoi(uih.ask_starts_first()) == StartsFirst::Player) {
+                pc_play(StartsFirst::Player);
+            } else {
+                pc_play(StartsFirst::Computer);
+            }
+            break;
+        case Mode::PP:
+            pp_play();
+            break;
     }
 }
 

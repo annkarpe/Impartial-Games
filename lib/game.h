@@ -6,9 +6,9 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <map>
 
-class Game
-{
+class Game {
 public:
     virtual ~Game() = 0;
     virtual void from_string(const std::string &desc) = 0;
@@ -24,6 +24,7 @@ std::vector<size_t> string_to_vec(const std::string &s);
 
 class Nim : public Game {
     std::vector<size_t> heaps;
+    std::map <std::string, bool> transposition_table;
 public:
     ~Nim();
 
@@ -37,10 +38,9 @@ public:
 
     static std::unique_ptr<Game> create();
 };
-
-
 class Chomp : public Game {
     std::vector<size_t> board;
+    std::map <std::string, bool> transposition_table;
 public:
     ~Chomp();
 

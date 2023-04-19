@@ -22,6 +22,3 @@ std::vector<std::string> GameFactory::titles_of_games() {
     }
     return v;
 }
-
-
-
