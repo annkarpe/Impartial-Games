@@ -19,6 +19,7 @@ void Play::choose() {
 void Play::init() {
     g->from_string(uih.ask_init());
 }
+
 void Play::ai_move() {
     std::cout << g->to_string() << std::endl;
     std::vector<std::unique_ptr<Game>> ch = g->children();
@@ -56,20 +57,20 @@ void Play::pp_play() {
     std::cout << "player " << player << " wins!";  
 }
 
-void Play::pc_play(int player_starts) {
-    int player_turn;
+void Play::pc_play(int computer_starts) {
+    int computer_turn = computer_starts;
     while(g->any_moves_left()) {
-        if (player_turn) {
-            one_move();
+        if (computer_turn) {
+            ai_move();            
         } else {
-            ai_move();
+            one_move();
         }
-        std::cout << (player_turn ? "player moves\n" : "computer moves\n");
+        std::cout << (computer_turn ? "computer moves\n" : "player moves\n");
         if (!g->any_moves_left()) {
-            std::cout << (player_turn ? "computer wins\n" : "player wins\n");
+            std::cout << (computer_turn ? "player wins\n" : "computer wins\n");
             break;
         }
-        player_turn = !player_turn;
+        computer_turn = !computer_turn;
     }
 }
 

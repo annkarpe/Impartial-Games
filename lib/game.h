@@ -17,7 +17,9 @@ public:
     virtual bool move(const std::string &desc) = 0;
     virtual std::string help() const = 0;
     virtual bool any_moves_left() const = 0;
-    virtual bool is_winning_pos() const = 0;
+    virtual bool is_winning_pos() = 0;
+    virtual bool is_in_table(const std::string &pos) const = 0;
+    virtual void add_to_table(const std::string &pos, bool b_val) = 0;
 };
 
 std::vector<size_t> string_to_vec(const std::string &s);
@@ -34,7 +36,9 @@ public:
     bool move(const std::string &desc) override;
     std::string help() const override;
     bool any_moves_left() const override;
-    bool is_winning_pos() const override;
+    bool is_winning_pos() override;
+    bool is_in_table(const std::string &pos) const;
+    void add_to_table(const std::string &pos, bool b_val);
 
     static std::unique_ptr<Game> create();
 };
@@ -50,8 +54,9 @@ public:
     bool move(const std::string &desc) override;
     std::string help() const override;
     bool any_moves_left() const override;
-    bool is_winning_pos() const override;
-
+    bool is_winning_pos() override;
+    bool is_in_table(const std::string &pos) const;
+    void add_to_table(const std::string &pos, bool b_val);
     static std::unique_ptr<Game> create();
 };
 

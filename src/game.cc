@@ -40,20 +40,25 @@ std::vector<std::unique_ptr<Game>> Nim::children() const {
     return child;
 }
 
-bool Nim::is_winning_pos() const {
+bool Nim::is_winning_pos() {
     if (!any_moves_left()) {
-        return true;
+        return false;
+    }
+
+    std::string pos = to_string();
+
+    if (is_in_table(pos)) {
+        return transposition_table[pos];
     }
 
     auto ch = children();
 
     for (auto &c: ch) {
-        if (!c->is_winning_pos()) {
+        if (c->any_moves_left() && !c->is_winning_pos()) {
+            add_to_table(pos, true);
             return true;
         }
     }
-
-    return false;
 }
 
 std::string Nim::to_string() const {
@@ -103,6 +108,18 @@ std::string Nim::help() const {
     return "please write two numbers, heap id and number of tokens to remove";
 }
 
+bool Nim::is_in_table(const std::string &pos) const {
+    auto it = transposition_table.find(pos);
+    if (it == transposition_table.end()) {
+        return false;
+    }
+    return true;
+}
+
+void Nim::add_to_table(const std::string &pos, bool b_val) {
+    transposition_table[pos] = b_val;
+}
+
 std::unique_ptr<Game> Nim::create() {
     return std::make_unique<Nim>();
 }
@@ -132,20 +149,25 @@ std::vector<std::unique_ptr<Game>> Chomp::children() const {
     return child;
 }
 
-bool Chomp::is_winning_pos() const {
+bool Chomp::is_winning_pos() {
     if (!any_moves_left()) {
-        return true;
+        return false;
+    }
+
+    std::string pos = to_string();
+
+    if (is_in_table(pos)) {
+        return transposition_table[pos];
     }
 
     auto ch = children();
 
     for (auto &c: ch) {
-        if (!c->is_winning_pos()) {
+        if (c->any_moves_left() && !c->is_winning_pos()) {
+            add_to_table(pos, true);
             return true;
         }
     }
-    
-    return false;
 }
 
 std::string Chomp::to_string() const {
@@ -206,6 +228,18 @@ std::string Chomp::help() const {
 
 bool Chomp::any_moves_left() const {
     return std::any_of(board.begin(), board.end(), [&](int h) { return h > 0; });
+}
+
+bool Chomp::is_in_table(const std::string &pos) const {
+    auto it = transposition_table.find(pos);
+    if (it == transposition_table.end()) {
+        return false;
+    }
+    return true;
+}
+
+void Chomp::add_to_table(const std::string &pos, bool b_val) {
+    transposition_table[pos] = b_val;
 }
 
 std::unique_ptr<Game> Chomp::create() {
