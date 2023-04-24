@@ -9,11 +9,7 @@
 #include<cstdlib>
 #include<string>
 #include<fstream>
-
-
-//as I understand, to use GMock it's crutial
-//to pass the instances to the class constructor
-//as a parameters
+#include<chrono>
 
 enum StartsFirst {Player, Computer};
 enum Mode {PC, PP};

@@ -21,18 +21,22 @@ Nim::~Nim() { }
 
 void Nim::from_string(const std::string &desc) {
     heaps = string_to_vec(desc);
+    transposition_table = std::make_shared<std::map<std::string, bool>>();
+    (*transposition_table)[desc] = is_winning_pos();
 }
 
 bool Nim::any_moves_left() const {
     return std::any_of(heaps.begin(), heaps.end(), [&](int h) { return h > 0; });
 }
 
-std::vector<std::unique_ptr<Game>> Nim::children() const {
+std::vector<std::unique_ptr<Game>> Nim::children(
+ std::shared_ptr<std::map <std::string, bool>> t_table) const {
     std::vector<std::unique_ptr<Game>> child;
     for ( size_t heap = 0 ; heap < heaps.size() ; heap++) {
         for (size_t h = 1 ; h <= heaps[heap] ; h++) {
             std::unique_ptr<Nim> ptr = std::make_unique<Nim>(*this);
             ptr->heaps[heap] -= h;
+            ptr->transposition_table = t_table;
             child.push_back(std::move(ptr));
         }
     }
@@ -48,17 +52,20 @@ bool Nim::is_winning_pos() {
     std::string pos = to_string();
 
     if (is_in_table(pos)) {
-        return transposition_table[pos];
+        return (*transposition_table)[pos];
     }
 
-    auto ch = children();
+    auto ch = children(transposition_table);
 
     for (auto &c: ch) {
-        if (c->any_moves_left() && !c->is_winning_pos()) {
+        if (!c->is_winning_pos()) {
             add_to_table(pos, true);
             return true;
-        }
-    }
+        } 
+    } 
+    add_to_table(pos, false);              
+
+    return false;
 }
 
 std::string Nim::to_string() const {
@@ -109,15 +116,15 @@ std::string Nim::help() const {
 }
 
 bool Nim::is_in_table(const std::string &pos) const {
-    auto it = transposition_table.find(pos);
-    if (it == transposition_table.end()) {
+    auto it = transposition_table->find(pos);
+    if (it == transposition_table->end()) {
         return false;
     }
     return true;
 }
 
 void Nim::add_to_table(const std::string &pos, bool b_val) {
-    transposition_table[pos] = b_val;
+    (*transposition_table)[pos] = b_val;
 }
 
 std::unique_ptr<Game> Nim::create() {
@@ -128,9 +135,12 @@ Chomp::~Chomp() { }
 
 void Chomp::from_string(const std::string &desc) {
     board = string_to_vec(desc);
+    transposition_table = std::make_shared<std::map<std::string, bool>>();
+    (*transposition_table)[desc] = true;
 }
 
-std::vector<std::unique_ptr<Game>> Chomp::children() const {
+std::vector<std::unique_ptr<Game>> Chomp::children(
+ std::shared_ptr<std::map <std::string, bool>> t_table) const {
     std::vector<std::unique_ptr<Game>> child;
     for ( size_t b = 0 ; b < board.size() ; b++) {
         for (size_t h = 1 ; h <= board[b] ; h++) {
@@ -142,6 +152,7 @@ std::vector<std::unique_ptr<Game>> Chomp::children() const {
                 }
             }
             ptr->board[b] -= h;
+            ptr->transposition_table = t_table;
             child.push_back(std::move(ptr));
         }
     }
@@ -157,17 +168,20 @@ bool Chomp::is_winning_pos() {
     std::string pos = to_string();
 
     if (is_in_table(pos)) {
-        return transposition_table[pos];
+        return (*transposition_table)[pos];
     }
 
-    auto ch = children();
+    auto ch = children(transposition_table);
 
     for (auto &c: ch) {
-        if (c->any_moves_left() && !c->is_winning_pos()) {
+        if (!c->is_winning_pos()) {
             add_to_table(pos, true);
             return true;
-        }
-    }
+        } 
+    } 
+    add_to_table(pos, false);              
+
+    return false;
 }
 
 std::string Chomp::to_string() const {
@@ -231,15 +245,15 @@ bool Chomp::any_moves_left() const {
 }
 
 bool Chomp::is_in_table(const std::string &pos) const {
-    auto it = transposition_table.find(pos);
-    if (it == transposition_table.end()) {
+    auto it = transposition_table->find(pos);
+    if (it == transposition_table->end()) {
         return false;
     }
     return true;
 }
 
 void Chomp::add_to_table(const std::string &pos, bool b_val) {
-    transposition_table[pos] = b_val;
+    (*transposition_table)[pos] = b_val;
 }
 
 std::unique_ptr<Game> Chomp::create() {

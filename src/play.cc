@@ -22,7 +22,7 @@ void Play::init() {
 
 void Play::ai_move() {
     std::cout << g->to_string() << std::endl;
-    std::vector<std::unique_ptr<Game>> ch = g->children();
+    std::vector<std::unique_ptr<Game>> ch = g->children(g->transposition_table);
     for (auto &c : ch) {
         if (!c->is_winning_pos()) {
             g = std::move(c);
@@ -61,7 +61,7 @@ void Play::pc_play(int computer_starts) {
     int computer_turn = computer_starts;
     while(g->any_moves_left()) {
         if (computer_turn) {
-            ai_move();            
+            ai_move();      
         } else {
             one_move();
         }
@@ -77,11 +77,7 @@ void Play::pc_play(int computer_starts) {
 void Play::play() {
     switch(std::stoi(uih.ask_mode())) {
         case Mode::PC:
-            if (std::stoi(uih.ask_starts_first()) == StartsFirst::Player) {
-                pc_play(StartsFirst::Player);
-            } else {
-                pc_play(StartsFirst::Computer);
-            }
+            pc_play(StartsFirst(std::stoi(uih.ask_starts_first())));
             break;
         case Mode::PP:
             pp_play();
