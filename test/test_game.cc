@@ -108,9 +108,9 @@ TEST_F(ChompTest, MoveReturnsTrueWhenCorrectMove) {
 }
 
 TEST_F(ChompTest, ToStringReturnsCorrectBoardPositionAfterMove) {
-    ch.from_string("4 1 4");
+    ch.from_string("4 4 4");
     ch.move("1 1");
-    std::string s = "0: \n1: \n2: [x][ ][ ][ ]\n";
+    std::string s = "0: [ ][ ][ ]\n1: [ ][ ][ ]\n2: [x][ ][ ][ ]\n";
     ASSERT_EQ(s, ch.to_string());
 }
 
